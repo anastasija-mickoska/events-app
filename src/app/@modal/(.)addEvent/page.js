@@ -59,11 +59,12 @@ export default function AddEvent() {
             className="rounded-[10px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] border border-[#6A161C]/50 text-[#6A161C] w-full px-5 py-2.5 mb-6"
           />
 
-          <button className="w-48 bg-[#FFFAEF] text-[#6A161C] rounded-[10px] shadow-[5px_5px_10px_0px_rgba(0,0,0,0.25)] border border-[#6A161C] py-1 mt-4">
+          <button className="w-48 bg-[#FFFAEF] text-[#6A161C] rounded-[10px] shadow-[5px_5px_10px_0px_rgba(0,0,0,0.25)] border border-[#6A161C] py-1 mt-4
+          hover:bg-[#6A161C] hover:text-[#FFFAEF]">
             Upload Image
           </button>
 
-          <button className="bg-[#6A161C] text-[#FFFAEF] rounded-[10px] w-[50%] tracking-widest py-2.5 mb-24 mt-12 self-center">
+          <button className="bg-[#6A161C] text-[#FFFAEF] rounded-[10px] w-[50%] tracking-widest py-2.5 mb-24 mt-12 self-center hover:bg-[#5E040A]">
             ADD EVENT
           </button>
         </form>

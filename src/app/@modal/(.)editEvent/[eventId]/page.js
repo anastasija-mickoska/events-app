@@ -70,15 +70,17 @@ export default function EditEvent() {
               className="rounded-[10px]"
             />
             <div className="flex flex-row items-center justify-center gap-4">
-              <button className="w-48 bg-[#FFFAEF] text-[#6A161C] rounded-[10px] shadow-[5px_5px_10px_0px_rgba(0,0,0,0.25)] border border-[#6A161C] py-1">
+              <button className="w-48 bg-[#FFFAEF] text-[#6A161C] rounded-[10px] shadow-[5px_5px_10px_0px_rgba(0,0,0,0.25)] border border-[#6A161C] py-1
+              hover:bg-[#6A161C] hover:text-[#FFFAEF]">
                 Upload Image
               </button>
-              <button className="w-48 bg-[#FFFAEF] text-[#6A161C] rounded-[10px] shadow-[5px_5px_10px_0px_rgba(0,0,0,0.25)] border border-[#6A161C] py-1">
+              <button className="w-48 bg-[#FFFAEF] text-[#6A161C] rounded-[10px] shadow-[5px_5px_10px_0px_rgba(0,0,0,0.25)] border border-[#6A161C] py-1
+              hover:bg-[#6A161C] hover:text-[#FFFAEF]">
                 Delete Image
               </button>
             </div>
           </div>
-          <button className="bg-[#6A161C] text-[#FFFAEF] rounded-[10px] w-[50%] tracking-widest py-2.5 mb-24 mt-12 self-center">
+          <button className="bg-[#6A161C] text-[#FFFAEF] rounded-[10px] w-[50%] tracking-widest py-2.5 mb-24 mt-12 self-center hover:bg-[#5E040A]">
             SAVE CHANGES
           </button>
         </form>

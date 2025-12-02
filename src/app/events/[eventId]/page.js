@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function EventDetails({params}) {
     const [favourite, setFavourite] = useState({
@@ -13,6 +14,7 @@ export default function EventDetails({params}) {
         isInterested: false,
         src: '/favourite.svg'
     });
+    const {user} = useAuth();
 
     const toggleFavourite = () => {
         setFavourite(prev => ({
@@ -53,14 +55,15 @@ export default function EventDetails({params}) {
                   pharetra non. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque vel tortor 
                   semper, dictum tortor varius, aliquam sem. Aenean hendrerit pretium dignissim.<br/></div>
             <div className="flex flex-row items-start gap-12 mx-24 mb-24">
-                <button onClick={toggleFavourite} className="flex flex-row items-center justify-center gap-4 bg-[#004A41] text-[#FFFAEF] tracking-wider rounded-[10px] py-2.5 px-5">
+                {user && user.email !== "admin@gmail.com" && <button onClick={toggleFavourite} className="flex flex-row items-center justify-center gap-4 bg-[#004A41] text-[#FFFAEF] tracking-wider rounded-[10px] py-2.5 px-5
+                hover:bg-[#0E7C71] hover:border hover:border-[#FFFAEF]">
                     <h5 className="text-center justify-center text-xl font-medium tracking-widest">{favourite.text}</h5>
                     <Image src={favourite.src} width={25} height={25} alt="favourite icon"/> 
-                </button>
-                <button onClick={toggleInterested} className="flex flex-row items-center justify-center gap-4 bg-[#6A161C] text-[#FFFAEF] tracking-wider rounded-[10px] py-2.5 px-5">
+                </button>}
+                {user && user.email !== "admin@gmail.com" &&<button onClick={toggleInterested} className="flex flex-row items-center justify-center gap-4 bg-[#6A161C] text-[#FFFAEF] tracking-wider rounded-[10px] py-2.5 px-5 hover:bg-[#5E040A]">
                     <h5 className="text-center justify-center text-xl font-medium tracking-widest">Interested/Going</h5>
                     <Image src={interested.src} width={25} height={25} alt="favourite icon"/> 
-                </button>
+                </button>}
             </div>
         </section>
     )
