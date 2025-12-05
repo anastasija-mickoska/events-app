@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "../src/app/context/AuthContext";
 
@@ -25,7 +25,7 @@ export default function Header() {
 
         {user && user.email !== "admin@gmail.com" && (
           <li className="flex items-center justify-center h-full cursor-pointer px-5 tracking-widest hover:border-b-[#FFFAEF] hover:border-b-3">
-            <Link href="/favourites/123">FAVOURITES</Link>
+            <Link href={`/favourites/${user.id}`}>FAVOURITES</Link>
           </li>
         )}
 
@@ -35,6 +35,10 @@ export default function Header() {
           ) : (
             <button className="cursor-pointer" onClick={logout}>LOGOUT</button>
           )}
+        </li>
+        <li className="flex flex-row gap-2 items-center justify-center h-full px-5 tracking-widest text-[#FFFAEF]">
+          <Image src="/user.svg" width={30} height={30} alt="User Icon"/>
+          {user && <p>{user.email}</p>}
         </li>
       </ul>
     </nav>

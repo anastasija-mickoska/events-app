@@ -21,7 +21,7 @@ export default function Register() {
       const user = userCredential.user;
 
       try {
-        await setDoc(doc(db, "Users", user.uid), { email });
+        await setDoc(doc(db, "Users", user.uid), { email, favourites:[], interested:[] });
         router.replace("/");
       } catch (err) {
         await user.delete();

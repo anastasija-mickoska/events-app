@@ -5,34 +5,66 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function Event({id, from, to, name, street, city, country, image}) {
+export default function Event({id, from, to, name, street, city, country, image, favouritesCount}) {
+  const {user, setUser} = useAuth();
+  const isFav = user?.favourites?.includes(id);
   const [favourite, setFavourite] = useState({
-    isFav: false,
-    src: "/favourite.svg",
-    text: "Add to Favourites",
+    isFav: isFav ?? false,
+    src: isFav ? "/favourite_fill.svg" : "/favourite.svg",
+    text: isFav ? "Favourite" : "Add to Favourites",
   });
   const router = useRouter();
-  const {user} = useAuth();
 
   const handleEditClick = (e) => {
     e.stopPropagation();
-    router.push(`/editEvent/${id}`); //the event id to be changed
+    router.push(`/editEvent/${id}`); 
   };
   const handleDeleteClick = (e) => {
     e.stopPropagation();
-    router.push(`/deleteEvent/${id}`); //the event id to be changed
+    router.push(`/deleteEvent/${id}`); 
   };
-  const toggleFavourite = (e) => {
+  const toggleFavourite = async (e) => {
     e.stopPropagation();
-    setFavourite((prev) => ({
-      isFav: !prev.isFav,
-      src: prev.isFav ? "/favourite.svg" : "/favourite_fill.svg",
-      text: prev.isFav ? "Add to Favourites" : "Favourite",
-    }));
+        if (!user) return;
+    const currentFavourites = user.favourites ?? [];
+    const wasFav = currentFavourites.includes(id);
+    const isAdding = !wasFav;
+
+    const updatedFavourites = isAdding
+      ? [...currentFavourites, id]
+      : currentFavourites.filter((id) => id !== id);
+
+    favouritesCount += isAdding ? 1 : -1;
+
+    setFavourite({
+      isFav: !favourite.isFav,
+      src: !favourite.isFav ? "/favourite_fill.svg" : "/favourite.svg",
+      text: !favourite.isFav ? "Favourite" : "Add to Favourites",
+    });
+
+    try {
+      await fetch(`/api/users/${user.id}?type=favourite`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ favourites: updatedFavourites }),
+      });
+      const eventRes = await fetch(`/api/events/${id}`);
+      const latestEvent = await eventRes.json();
+      const currentCount = latestEvent.favouritesCount ?? 0;
+      const favouritesCount = isAdding ? currentCount + 1 : currentCount - 1;
+      await fetch(`/api/events/${id}?type=favourite`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ favouritesCount: favouritesCount }),
+      });
+      setUser((prev) => ({ ...prev, favourites: updatedFavourites }));
+    } catch (err) {
+      console.error("Failed to update favourites:", err);
+    }
   };
 
   const navigateToEvent = () => {
-    router.push(`/events/${id}`); //event id to be changed
+    router.push(`/events/${id}`); 
   };
 
   return (

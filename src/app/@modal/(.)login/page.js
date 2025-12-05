@@ -29,7 +29,9 @@ export default function Login() {
         alert("User data not found in Firestore.");
         return;
       }
-      const userData = { id: user.uid, email: user.email };
+      const data = userDocSnap.data();
+
+      const userData = { id: user.uid, email: user.email, favourites: data.favourites, interested: data.interested };
       login(userData);
       router.replace("/");
 
